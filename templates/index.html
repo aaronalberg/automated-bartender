@@ -6,7 +6,7 @@
       <h1>Automated Bartender</h1>
       <form action="/make/" method="post">
          {% for drink in drinks %}
-            <input name="drink" value={{drink}} type="submit"></input>
+            <input name="drink" value="{{drink.name}}" type="submit"></input>
          {% endfor %}
       </form>
       

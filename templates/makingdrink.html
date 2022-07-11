@@ -3,6 +3,10 @@
       <title>Making your drink</title>
    </head>
    <body>
-      <h1>Now making your {{drink}}</h1>
+      <button type="button"><a  href="/">Back</a></button>
+      <h1>Now making your {{drink.name}}</h1>
+      {% for i in drink.ingredients %}
+         <p>{{i.name}} : {{i.quantity}}</p>
+      {% endfor %}
    </body>
 </html>

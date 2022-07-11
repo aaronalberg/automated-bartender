@@ -1,20 +1,36 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 import datetime
+import json
+
 app = Flask(__name__)
+
+file = open("drinks.json")
+drinks = json.load(file)["drinks"]
+
+def find_drink(drink, drinks):
+   for i in drinks:
+      if i["name"] == drink:
+         return i
+      print(i)         
+   return "NOT FOUND"
 
 
 @app.route("/")
 def home():
    templateData = {
-      'drinks': ["oj", "gin", "rum"]
+      'drinks': drinks
       }
    return render_template('index.html', **templateData)
 
 @app.route("/make/", methods=['POST'])
-def move_forward():
+def make_drink():
     drink = request.form['drink']
     print("request received to make " + drink)
-    return render_template('makingdrink.html', drink=drink);
+
+    templateData = {
+      'drink': find_drink(drink, drinks)
+      }
+    return render_template('makingdrink.html', **templateData);
 
 
 if __name__ == "__main__":
