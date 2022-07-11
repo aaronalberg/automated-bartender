@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+   <head>
+      <title>Automated Bartender</title>
+   </head>
+   <body>
+      <h1>Automated Bartender</h1>
+      <form action="/make/" method="post">
+         {% for drink in drinks %}
+            <input name="drink" value={{drink}} type="submit"></input>
+         {% endfor %}
+      </form>
+      
+   </body>
+</html>
