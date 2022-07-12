@@ -12,7 +12,6 @@ def find_drink(drink, drinks):
    for i in drinks:
       if i["name"] == drink:
          return i
-      print(i)         
    return "NOT FOUND"
 
 
@@ -35,19 +34,32 @@ def make_drink():
 
 @app.route("/add-drink", methods=['POST'])
 def add_drink():
+   new_name = request.form['new-drink-name'].lower()
+   if find_drink(new_name, drinks) != "NOT FOUND":
+      return redirect("/")
    new_drink = {}
-   new_drink['name'] = request.form['new-drink-name']
+   new_drink['name'] = new_name
 
    ingredients = []
    for i in range(1, MAX_PUMPS + 1):
-      label = 'new-drink-ingredient-' + str(i)
-      if label not in request.form:
+      # have processed all ingredients provided
+      if request.form['new-drink-ingredient-' + str(i)].lower() not in request.form:
          break
 
-      request.form['new-drink-ingredient-' + str(i)]
+      new_ingredient_name = request.form['new-drink-ingredient-' + str(i)].lower()
+      new_ingredient_quantity = request.form['new-drink-quantity-' + str(i)]
+      try:
+         new_ingredient_name = request.form['new-drink-ingredient-' + str(i)].lower()
+         new_ingredient_quantity = int(request.form['new-drink-quantity-' + str(i)])
+         if new_ingredient_quantity <= 0:
+            raise ValueError("negative")
+      except ValueError:
+         print("ERRORORED")
+         return redirect("/")
+
       new_ingredient = {
-         "name": request.form['new-drink-ingredient-' + str(i)],
-         "quantity": request.form['new-drink-quantity-' + str(i)]
+         "name": new_ingredient_name,
+         "quantity": new_ingredient_quantity
       }
       
       ingredients.append(new_ingredient)
@@ -59,10 +71,7 @@ def add_drink():
    with open('drinks.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
 
-   templateData = {
-      'drinks': drinks
-      }
-   return render_template('index.html', **templateData)
+   return redirect('/')
 
 @app.route("/create-page", methods=['GET', 'POST'])
 def create_page():
@@ -71,10 +80,6 @@ def create_page():
       }
 
    return render_template('createpage.html', **templateData)
-
-
-
-
 
 
 
