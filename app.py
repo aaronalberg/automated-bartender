@@ -43,7 +43,7 @@ def add_drink():
    ingredients = []
    for i in range(1, MAX_PUMPS + 1):
       # have processed all ingredients provided
-      if request.form['new-drink-ingredient-' + str(i)].lower() not in request.form:
+      if 'new-drink-ingredient-' + str(i) not in request.form:
          break
 
       new_ingredient_name = request.form['new-drink-ingredient-' + str(i)].lower()
@@ -56,7 +56,7 @@ def add_drink():
       except ValueError:
          print("ERRORORED")
          return redirect("/")
-
+      
       new_ingredient = {
          "name": new_ingredient_name,
          "quantity": new_ingredient_quantity
