@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+   <head>
+      <title>Create a new drink</title>
+   </head>
+   <body>
+      <button type="button"><a  href="/">Back</a></button>
+      <form action="/add-drink" method="post">
+         <label for="new-drink-name">Name</label>
+         <input name="new-drink-name" type="text"></input>
+         <br />
+
+         {% for i in range(1, number_ingredients + 1) %}
+            <label for="new-drink-ingredient-{{i}}">Ingredient {{i}}</label>
+            <input name="new-drink-ingredient-{{i}}" type="text"></input>
+            <label for="new-drink-quantity-{{i}}">Quantity</label>
+            <input name="new-drink-quantity-{{i}}" type="text"></input>
+            <br />
+         {% endfor %}
+
+         <button type="submit">Add Drink!</button>
+      </form>
+   </body>
+</html>

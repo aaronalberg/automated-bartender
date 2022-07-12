@@ -4,11 +4,22 @@
    </head>
    <body>
       <h1>Automated Bartender</h1>
-      <form action="/make/" method="post">
+      <form action="/make" method="post">
          {% for drink in drinks %}
             <input name="drink" value="{{drink.name}}" type="submit"></input>
          {% endfor %}
       </form>
+      <h2>Add a new drink:</h2>
+      <h3>Choose number of ingredients</h3>
+      <form action='/create-page' method="post">
+         <select name="number-ingredients" id="number-ingredients">
+           {% for i in range(1,7) %}
+               <option value={{i}}>{{i}}</option>
+           {% endfor %}
+         </select>
+         <button type="submit">Proceed</button>
+      </form>
+
       
    </body>
 </html>
